@@ -1,3 +1,3 @@
 export class Token{
-    constructor(private token:string){}
+    constructor(public token:string){}
 }

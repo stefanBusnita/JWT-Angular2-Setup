@@ -1,3 +1,4 @@
+import { TokenService } from './../token/token.service';
 import { SettingsService } from './../general/settings.service';
 import { Token } from './../token/token';
 import { FormGroup } from '@angular/forms';
@@ -10,22 +11,21 @@ import { Observable, Subscription } from 'rxjs/Rx';
 @Injectable()
 export class LoginService {
 
+  private loginAccess : string = '/login';
+
   //use service constants for EventEmitter.
   loginStatus = new EventEmitter<number>();
 
-  constructor(private authService: AuthService,private settings : SettingsService, private http: Http) { }
+  constructor(private authService: AuthService,private settings : SettingsService, private http: Http, private CHANGE : TokenService) { }
 
 
   doLogin(loginData: FormGroup) {
     
     const loginDataObj = loginData.value;
-    console.log("in Login Service",loginDataObj);
-    this.authService.doSuccesfullLogin(new Token("token data string"));
     const requestBody = JSON.stringify(loginDataObj);
 
-    return this.http.post(this.settings.fetchFullHttpSettings()+'/login', requestBody).map((response: Response) => response.json()).subscribe((token: Token) => {
+    return this.http.post(this.settings.fetchFullHttpSettings()+this.loginAccess, requestBody).map((response: Response) => response.json()).subscribe((token: Token) => {
       this.authService.doSuccesfullLogin(token);
-      console.log(token);
     });
   }
 

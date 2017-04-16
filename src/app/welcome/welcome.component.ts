@@ -1,3 +1,5 @@
+import { AuthService } from './../general/auth.service';
+import { PermissionsTstService } from './../resources/permissions-tst.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor() { }
+  authDetails: any;
+
+  constructor(private permissionsTestService: PermissionsTstService, private authService: AuthService) { }
 
   ngOnInit() {
+
+    this.permissionsTestService.getPermissionTest(1).subscribe((response: any) => {
+      console.log("YOU CAN ACCESS THE USER RESOURCE",response);
+    });
+
+    this.authDetails = this.authService.doGetAuthDetails();
+  }
+
+  getUserData() {
+
+  }
+
+  getGuestData() {
+
+  }
+
+  getAdminData() {
+
   }
 
 }

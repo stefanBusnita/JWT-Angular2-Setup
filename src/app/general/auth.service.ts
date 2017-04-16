@@ -1,3 +1,4 @@
+import { ProfileService } from './../resources/profile.service';
 import { Observable, Subject } from 'rxjs/Rx';
 import { TokenService } from './../token/token.service';
 import { Token } from './../token/token';
@@ -7,12 +8,26 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class AuthService {
 
-  constructor(private tokenService: TokenService, private router: Router) { }
+  private authDetails : any;
+
+  constructor(private tokenService: TokenService,private profileService :  ProfileService, private router: Router) { }
 
 
   doSuccesfullLogin(tokenData: Token) {
     this.tokenService.storeToken(tokenData);
-    this.router.navigate(['/welcome']);
+    this.doProfile();
+    
+  }
+
+  private doProfile(){
+      this.profileService.getProfile().subscribe((response : any)=>{
+          this.authDetails = response;
+          this.router.navigate(['/welcome']);
+      })
+  }
+
+  doGetAuthDetails(){
+    return this.authDetails;
   }
 
   doLogout() {
@@ -20,7 +35,7 @@ export class AuthService {
   }
 
   isAuthenticated() : boolean{
-    return this.tokenService.getToken() ? true : false;
+    return this.tokenService.getTokenData() ? true : false;
   }
 
 }

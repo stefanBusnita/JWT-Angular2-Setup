@@ -1,3 +1,4 @@
+import { FlashService } from './../general/flash.service';
 import { LoginService } from './login.service';
 import { Token } from './../token/token';
 import { Router } from '@angular/router';
@@ -13,8 +14,9 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 export class LoginComponent implements OnInit, OnDestroy {
 
   loginForm: FormGroup;
+  formSubmitted : boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private loginService : LoginService) { }
+  constructor(private formBuilder: FormBuilder, private loginService : LoginService,private flashService: FlashService) { }
 
   ngOnInit() {
     this.initForm();
@@ -27,9 +29,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    this.formSubmitted = true;
     if (this.loginForm.valid) {
       this.loginService.doLogin(this.loginForm);
+      this.formSubmitted = false;
     }else{
+      this.flashService.doError("Please complete required fields.",true);
       //show validation messages in interface
     }
   }

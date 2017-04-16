@@ -1,3 +1,6 @@
+import { FlashService } from './general/flash.service';
+import { ProfileService } from './resources/profile.service';
+import { PermissionsTstService } from './resources/permissions-tst.service';
 import { LoginService } from './login/login.service';
 import { SettingsService } from './general/settings.service';
 import { TokenService } from './token/token.service';
@@ -14,13 +17,15 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { FlashComponent } from './flash/flash.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    FlashComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +34,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
     HttpModule,
     routing
   ],
-  providers: [LoggedService,AuthService,TokenService,LoginService,SettingsService],
+  providers: [LoggedService,FlashService, AuthService, TokenService, LoginService, SettingsService,PermissionsTstService,ProfileService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

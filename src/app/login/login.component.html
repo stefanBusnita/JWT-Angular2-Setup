@@ -20,13 +20,15 @@
                     </div>
                     <div class="form-bottom">
                         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
-                            <div class="form-group">
+                            <div class="form-group" [ngClass]="{'has-error' : formSubmitted && !loginForm.valid && !loginForm.controls['username'].valid}">
                                 <label class="sr-only" for="form-username">Username</label>
                                 <input type="text" formControlName="username" name="form-username" placeholder="Username..." class="form-username form-control" id="form-username">
+                                <div *ngIf=" formSubmitted && !loginForm.valid && !loginForm.controls['username'].valid" class="help-block">Username is required. Hint:stefan</div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" [ngClass]="{'has-error' : formSubmitted && !loginForm.valid && !loginForm.controls['password'].valid}">
                                 <label class="sr-only" for="form-password">Password</label>
                                 <input type="password" formControlName="password" name="form-password" placeholder="Password..." class="form-password form-control" id="form-password">
+                                <div *ngIf=" formSubmitted && !loginForm.valid && !loginForm.controls['password'].valid" class="help-block">Password is required. Hint: 123456</div>
                             </div>
                             <button type="submit" class="btn">Sign in!</button>
                         </form>

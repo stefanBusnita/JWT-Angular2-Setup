@@ -1,3 +1,14 @@
 <div>
     Welcome, you are now logged in with JWT.
+    <table class="table table-condensed">
+        <thead>
+            <th>Roles</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let authority of authDetails?.authorities">
+                <td>{{authority.authority}}</td>
+            </tr>
+        </tbody>
+    </table>
+
 </div>
